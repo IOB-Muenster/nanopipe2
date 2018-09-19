@@ -58,11 +58,11 @@ set the path and create folders
 # mkdir -p $TOOLSDIR/bin
 
 and then execute on FreeBSD (asuming you took last version 932, please
-change to your version!)
+change to your version!) - please use a bource shell or bash!
 
 	[ -d last ] && rm -rf last
 
-	unzip $SRCDIR/last/last-923.zip
+	unzip last-923.zip
 	mv last-923 last
 
 	cd last/src
@@ -85,9 +85,9 @@ change to your version!)
 
 or on Linux
 
-   [ -d last ] && rm -rf last
+	[ -d last ] && rm -rf last
 
-	unzip $SRCDIR/last/last-923.zip
+	unzip last-923.zip
 	mv last-923 last
 
 	cd last/src
@@ -116,8 +116,8 @@ To create a new target, do the folowing steps:
   to needs.  This depends on your settings: The global config file is
   always read, the target only if present.
 
-- Create the target database. Plase the desired fasta file called
-  target.fasta into the subfolder
+- Create the target database.  Put the genome fasta file called into
+  the subfolder with the name target.fasta.
 
 - Create the fasta file named target.fasta
 
