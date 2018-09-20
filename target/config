@@ -1,0 +1,50 @@
+# ========================================================================
+# The global configuration file for nanopipe2.  Settings with an [*]
+# in the comment can/should be adapted in a config file in a target
+# subdirectory.  Settings with [-] are planned for future usage!
+# ========================================================================
+
+[common]
+# [*] The external name of the target to display e.g. on a web page.
+# This value should be set in a specific subdirectory
+name=
+# [*] Is the target metagenomics or not? (yes/no)
+metagenomics=N
+# Maximum time of the calculator per request in hours
+timeout=96
+
+[input]
+# [-] The maximum size of the query file in MB
+maxsize=1024
+# [*] Minimum query sequence length (in nucleotids)
+minlen=10
+# [-] Maximum number of query sequences. If more, the remainung ones
+# are skipped
+maxseqs=10000
+
+[last]
+# Number of threads per request (maximum accepted is 4)
+threads=4
+# [*] Parameters for the lastal run
+params=-a 10 -b 4 -A 17 -B 3 -S 1
+# [*] The substitution matrix
+substmatrix=[5,-3,-2,-14],[-7,6,-6,-9],[-4,-6,6,-14],[-14,-9,-8,5]
+
+[analyze]
+# The maximum memory used in MB
+maxmem=16384
+# [*] The minimum count of nucleotids at a position, if less he
+# position is assumed to be a gap
+mincount=10
+# [*] The minimum length of the locations in the results
+minlen=40
+# [*] The maximum acceptable gap range in locations
+maxgap=20
+# [*] The maximum acceptable percentage of N in the locations
+maxN=10
+# [*] Nucleotide counts are considered equal, if the numbers are
+# somehow similar: (n1 * equal <= n2).  It is evaluated after sorting
+# the nucelotide counts.
+equal=0.8
+# [*] Take only highest scores? (Y/N)
+hscore=N
