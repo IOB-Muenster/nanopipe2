@@ -1,7 +1,7 @@
-How to enable the nanopipe pipeline?
+How to enable the nanopipe pipeline:
 ========================================================================
 
-First of all: choose a directory (here always named /path/to/nanopipe)
+First of all, choose a directory (here always named /path/to/nanopipe)
 where you place all nanopipe related stuff, meaning programs and your
 genome targets.  The directory where you place your generated data
 depends on your favorite location.
@@ -18,7 +18,7 @@ drwxr-xr-x  3 user  group      3 Jun 29 15:29 calculate
 drwxr-xr-x  3 user  group      3 Jun 29 15:29 modules
 drwxr-xr-x  3 user  group      3 Jun 29 15:29 targets
 
-Then you need to adjust some settings.  First the file
+Then you need to adjust some settings. First, the file
 modules/nanopipe2/paths.pm and change the line
 
 our $PROJDIR = "Please enter your nanopipe2 directory here!";
@@ -46,7 +46,7 @@ of which shell you use.  You can place this in .bashrc or .tcshrc
 files
 
 
-Create the last binaries
+Create the last binaries:
 ========================================================================
 
 Download a new version of last http://last.cbrc.jp/ and do the
@@ -104,22 +104,21 @@ or on Linux
 	rm -rf last
 
 
-Create a target
+Create a target:
 ========================================================================
 
 To create a new target, do the folowing steps:
 
 - Create a new subfolder in /path/to/nanopipe/targets
 
-- (Maybe) Copy the (global) config file
-  /path/to/nanopipe/targets/config into your subfolder and adjust it
-  to needs.  This depends on your settings: The global config file is
-  always read, the target only if present.
+- Copy the config file /path/to/nanopipe/targets/config into your subfolder
+  and modify it according to your new task. Dont forget to give the name to 
+  the target! 
 
-- Create the target database.  Put the genome fasta file called into
-  the subfolder with the name target.fasta.
+- Create the target database. Put your genome fasta (or any target you are 
+  going to use) file into the subfolder with the name 'targets'
 
-- Create the fasta file named target.fasta
+- Name this file 'target.fasta'
 
 - Then run the command lastdb in the target's folder
 
