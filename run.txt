@@ -1,0 +1,51 @@
+Run the nanopipe
+========================================================================
+
+To run teh software it should be properly installed, the PATH and
+PERL5LIB environmet set and the target folders prepared.
+
+Enter a directory where you want to have a run.  Place following files
+inside:
+
+- input.query - the query file with fasta seqences
+
+- input.target - a file containing he target (usually the
+  (subdirectory) name what you used in the /path/to/nanopipe/targets
+  directory)
+
+- input.lastparams - the parameters for last
+
+  -a 10 -b 4 -A 17 -B 3 -S 1
+
+- input.substmatrix - the substitution matrix like
+
+          A       C       G       T
+  A       5       -3      -2      -14
+  C       -7      6       -6      -9
+  G       -4      -6      6       -14
+  T       -14     -9      -8      5
+
+  Note: the value of substmatrix in the config files inside the
+  targets folder are not taken, because these values had been used in
+  the web application
+
+Then type the command:
+
+# nanopipe_calc.pl -q input.query -t input.target
+
+In the end you will get following files:
+
+cal.tidmap - A file containing the relationship between numbers of
+genereted fiiles and the original sequence ids.  To separate between
+these was done, because ids can be very colng and contain arbitrary
+charaters (maybe).
+
+calc.nuccounts.n - The files containg the nuceotid counts
+
+calc.nuccounts.n.poly - The polymorphism to the nuccounts file
+
+calc.nuccounts.n.help - Not needed here, used for web page display.
+
+calc.consensus.n - The consensus files for the calc.nuccounts.n files
+
+calc.lastalign.maf - the last data
