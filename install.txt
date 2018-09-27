@@ -1,4 +1,4 @@
-How to enable the nanopipe pipeline:
+How to enable the nanopipe pipeline
 ========================================================================
 
 
@@ -7,6 +7,7 @@ Requirements
 
 Following software needs to be installed
 
+- Programming languages perl (5.24) and python (2.7.14)
 - samtools and last (installation procedure see below!)
 
 
@@ -14,8 +15,8 @@ Howto
 ========================================================================
 
 
-First of all, choose a directory (here always named /path/to/nanopipe)
-where you place all nanopipe related stuff, meaning programs and your
+First of all, choose a directory (here named /path/to/nanopipe) where
+you place all nanopipe related stuff, meaning programs and your
 genome targets.  The directory where you place your generated data
 depends on your favorite location.
 
@@ -44,7 +45,7 @@ our $PROJDIR = "/path/to/nanopipe";
 Adjust paths
 ========================================================================
 
-Set the neccessary perl path and the executable path with
+Set the neccessary perl and executable paths with
 
 # setenv PATH ${PATH}:/path/to/nanopipe/calculate
 # setenv PERL5LIB /path/to/nanopipe/modules
@@ -59,8 +60,15 @@ of which shell you use.  You can place this in .bashrc or .tcshrc
 files
 
 
-Install last
+Install
 ========================================================================
+
+The software like samtools and last is installed inside the nanopipe
+folder /path/to/nanopipe/tools - just for simplicity and to avoid problems
+with other applications.  Applications are in the bin subfolder.
+
+
+==> Install last
 
 Download a new version of last http://last.cbrc.jp/ and do the
 following steps:
@@ -72,7 +80,7 @@ set the path and create folders
 
 Rename last-version.zip with your version like last-987.zip
 
-Then execute (here on FreeBSD) - please use a bource shell or bash!
+Then execute (on FreeBSD) - please use a bource shell or bash!
 
 -- snip --
 [ -d last ] && rm -rf last
@@ -122,14 +130,13 @@ rm -rf last
 -- snip --
 
 
-Install samtools
-========================================================================
+==> Install samtools
 
 Download samtools from http://www.htslib.org/download/
 
 Rename samtools-version.tar.bz2 with your version
 
-Then execute (here on FreeBSD) - please use a bource shell or bash!
+Then execute (on FreeBSD) - please use a bource shell or bash!
 
 -- snip --
 [ -d samtools ] && rm -rf samtools
@@ -162,8 +169,6 @@ rsync -av samtools/samtools $TOOLSDIR/bin
 
 rm -rf samtools
 -- snip --
-
-
 
 
 Create a target
