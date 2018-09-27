@@ -189,4 +189,4 @@ To create a new target, do the folowing steps:
 
 - Then run the command lastdb in the target's folder
 
-    # /path/to/nanopipe/tools/freebsd/bin/lastdb target target.fasta
+  # /path/to/nanopipe/tools/freebsd/bin/lastdb target target.fasta
