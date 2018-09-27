@@ -1,6 +1,19 @@
 How to enable the nanopipe pipeline:
 ========================================================================
 
+
+Requirements
+========================================================================
+
+Following software needs to be installed
+
+- samtools and last (installation procedure see below!)
+
+
+Howto
+========================================================================
+
+
 First of all, choose a directory (here always named /path/to/nanopipe)
 where you place all nanopipe related stuff, meaning programs and your
 genome targets.  The directory where you place your generated data
@@ -46,7 +59,7 @@ of which shell you use.  You can place this in .bashrc or .tcshrc
 files
 
 
-Create the last binaries:
+Install last
 ========================================================================
 
 Download a new version of last http://last.cbrc.jp/ and do the
@@ -57,54 +70,103 @@ set the path and create folders
 # export TOOLSDIR=/path/to/nanopipe/tools
 # mkdir -p $TOOLSDIR/bin
 
-and then execute on FreeBSD (asuming you took last version 932, please
-change to your version!) - please use a bource shell or bash!
+Rename last-version.zip with your version like last-987.zip
 
-	[ -d last ] && rm -rf last
+Then execute (here on FreeBSD) - please use a bource shell or bash!
 
-	unzip last-923.zip
-	mv last-923 last
+-- snip --
+[ -d last ] && rm -rf last
 
-	cd last/src
-	sed -e '{
-	s/= g++/= c++/;
-	s/= gcc/= cc/
-	}' <makefile >x
-	mv x makefile
-	cd ..
-	gmake
-	cd ..
+unzip last-version.zip
+mv last-version last
 
-	rsync -av last/src/last-split $TOOLSDIR/bin
-	rsync -av last/src/lastal $TOOLSDIR/bin
-	rsync -av last/src/lastdb $TOOLSDIR/bin
-	rsync -av last/scripts/maf-convert $TOOLSDIR/bin
-	rsync -av last/scripts/last-train $TOOLSDIR/bin
+cd last/src
+sed -e '{
+s/= g++/= c++/;
+s/= gcc/= cc/
+}' <makefile >x
+mv x makefile
+cd ..
+gmake
+cd ..
 
-	rm -rf last
+rsync -av last/src/last-split $TOOLSDIR/bin
+rsync -av last/src/lastal $TOOLSDIR/bin
+rsync -av last/src/lastdb $TOOLSDIR/bin
+rsync -av last/scripts/maf-convert $TOOLSDIR/bin
+rsync -av last/scripts/last-train $TOOLSDIR/bin
+
+rm -rf last
+-- snip --
 
 or on Linux
 
-	[ -d last ] && rm -rf last
+-- snip --
+[ -d last ] && rm -rf last
 
-	unzip last-923.zip
-	mv last-923 last
+unzip last-version.zip
+mv last-version last
 
-	cd last/src
-	cd ..
-	make
-	cd ..
+cd last/src
+cd ..
+make
+cd ..
 
-	rsync -av last/src/last-split $TOOLSDIR/bin
-	rsync -av last/src/lastal $TOOLSDIR/bin
-	rsync -av last/src/lastdb $TOOLSDIR/bin
-	rsync -av last/scripts/maf-convert $TOOLSDIR/bin
-	rsync -av last/scripts/last-train $TOOLSDIR/bin
+rsync -av last/src/last-split $TOOLSDIR/bin
+rsync -av last/src/lastal $TOOLSDIR/bin
+rsync -av last/src/lastdb $TOOLSDIR/bin
+rsync -av last/scripts/maf-convert $TOOLSDIR/bin
+rsync -av last/scripts/last-train $TOOLSDIR/bin
 
-	rm -rf last
+rm -rf last
+-- snip --
 
 
-Create a target:
+Install samtools
+========================================================================
+
+Download samtools from http://www.htslib.org/download/
+
+Rename samtools-version.tar.bz2 with your version
+
+Then execute (here on FreeBSD) - please use a bource shell or bash!
+
+-- snip --
+[ -d samtools ] && rm -rf samtools
+
+tar -xvzf $SRCDIR/samtools/samtools-1.4.1.tar.bz2
+mv samtools-1.4.1 samtools
+
+cd samtools
+gmake
+cd ..
+
+rsync -av samtools/samtools $TOOLSDIR/bin
+
+rm -rf samtools
+-- snip --
+
+or on Linux
+
+-- snip --
+[ -d samtools ] && rm -rf samtools
+
+bunzip2 -c $SRCDIR/samtools/samtools-1.4.1.tar.bz2 | tar -xvf -
+mv samtools-1.4.1 samtools
+
+cd samtools
+make
+cd ..
+
+rsync -av samtools/samtools $TOOLSDIR/bin
+
+rm -rf samtools
+-- snip --
+
+
+
+
+Create a target
 ========================================================================
 
 To create a new target, do the folowing steps:
@@ -123,5 +185,3 @@ To create a new target, do the folowing steps:
 - Then run the command lastdb in the target's folder
 
     # /path/to/nanopipe/tools/freebsd/bin/lastdb target target.fasta
-
-
