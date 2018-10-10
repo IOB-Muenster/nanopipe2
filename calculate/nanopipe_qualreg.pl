@@ -3,7 +3,7 @@
 
 #===========================================================================================================================================#
 # Loads maf file into memory. The key of the global hash is the chromosome/transcriptome ID. The value is a hash of all alignment starts
-# on that chromosome. It contains several sublists with end and quality symbols of the respective alignments. Needs ca. 1GB Ram.
+# on that chromosome. It contains several sublists with end and quality symbols of the respective alignments.
 #-------------------------------------------------------------------------------------------------------------------------------------------#
 
 sub loadMAF {
@@ -13,7 +13,6 @@ sub loadMAF {
 	my $align_end = 0;
 	my $chr = undef;
 	my $cwd = ${$_[0]};
-	my $match = ${$_[1]};
 	my %hash = ();
 	my $prevM = "";
 	
@@ -23,32 +22,20 @@ sub loadMAF {
 		# Skip comments
 		if($_ !~m"^#") {
 			# Choose lines staring with s... 
-			if($_ =~m"^s"){ 
-				# ...which belong to a chromosome
-				if($_ =~m"($match)"){ 
-					
-					# If target id and immediately following query id match the reg expression,
-					# I only want to use the target data.
-					if ($1 eq $prevM) {
-						$prevM = "";
-						next;
-					}
-					$prevM = $1;
-					$s_counter += 1;
+			if($_ =~m"^s\s"){ 
+				if ($s_counter== 0) {
 					# Split by any number of white spaces
 					my @line_data = split ' ', $_; 
 					my $align_len = length $line_data[-1];
 					$chr = $line_data[1]." ";
 					$align_start = $line_data[2];
 					$align_end = $align_len + $align_start -1;
-				}
-				# If target and following query id differ, $prevM needs to be resetted for the nex pair.
-				else {
-					$prevM = "";
-				}
+				}	
+				$s_counter += 1;
+				
 			}
-			elsif($_ =~m"^p"){
-				if ($s_counter == 1){
+			elsif($_ =~m"^p\s"){
+				if ($s_counter == 2){
 					$s_counter = 0;
 					# Split by any number of white spaces
 					my @quality_data = split ' ', $_; 
@@ -364,27 +351,9 @@ my $tidLen = %tidmap;
 if ($tidLen == 0) {
 	exit();
 }
-# Check whether chromosome or transcriptome
-elsif ($tidmap{"1"} =~ m"^chr"){
-	print "Chromosome data!\n";
-	$match = 'chr'
-}
-elsif ($tidmap{"1"} =~ m"[A-Z]{2}_\d+[.]\d+"){
-	print "Transcriptome data!\n";
-	$match = '[A-Z]{2}_\d+[.]\d+'
-}
-elsif ($tidmap{"1"} =~ m"Pf\d{1}D\d{1}_\d+_v\d+"){
-	print "Plasmodium data!\n";
-	$match = 'Pf\d{1}D\d{1}_\d+_v\d+'
-}
-else {
-	die "Unrecognized data for encodings in tidmap."
-}
 
-$matchRef =\$match;
-
-# Load MAF life
-my %hash = loadMAF($cwdRef, $matchRef);
+# Load MAF
+my %hash = loadMAF($cwdRef);
 
 # Read from stdin of python; pre-selectetd SNPs/db results
 my $pyInput = <STDIN>;
