@@ -10,6 +10,36 @@ Following software needs to be installed
 - Programming languages perl (5.24) and python (2.7.14)
 - samtools and last (installation procedure see below!)
 
+Following perl modules need to be installed
+
+- Core modules 
+  * Config
+  * Cwd
+  * Fcntl
+  * File::Basename
+  * File:: Copy
+  * File::Path
+  * Getopt::Long
+  * Time::HiRes
+  
+- Additional modules
+  * JSON::Tiny
+  * Proc::ProcessTable
+  * File::Touch
+  
+Following python modules need to be installed
+
+- Core modules
+  * __future__
+  * json
+  * os
+  * re
+  * subprocess
+  * sys
+  * time
+  * urllib
+  * urllib2
+
 
 Howto
 ========================================================================
@@ -169,6 +199,33 @@ rsync -av samtools/samtools $TOOLSDIR/bin
 
 rm -rf samtools
 -- snip --
+
+
+SNP databases
+========================================================================
+
+Two databases are used to analyze the SNPs: dbSNP for human data and
+PlasmoDB for Plasmodium falciparum. dbSNP is queried online through its
+API. You can change the assembly by editing the 'assembly' variable in
+the 'getSNPwww' function of 'nanopipe_calc_polymorphism.py'.
+A local copy of PlasmoDB needs to be supplied. You can either
+download it from this github page or create your own. To create your own
+database, go to http://plasmodb.org/plasmo/showQuestion.do?questionFullName=SnpQuestions.NgsSnpsByLocation
+, choose Plasmodium falciparum 3D7 and download the SNP data for all 14
+chromosomes. Choose the following settings:
+
+- Start at: 0
+- End Location: 0
+- Read frequency threshold: 80%
+- Minor allele frequency: 0
+- Percent isolates with a base call: 20%
+
+You get separate files per chromosome which need to be sorted using the 
+following options: sort -k1.20 -n -o filename filename
+Now place the files for each chromosome in a folder.
+Change the variable 'plasBasePath' in 'nanopipe_calc_polymorphism.py' to
+the folder path of your downloaded or self-created folder containing the
+SNP files.
 
 
 Create a target
