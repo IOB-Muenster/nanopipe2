@@ -209,7 +209,7 @@ PlasmoDB for Plasmodium falciparum. dbSNP is queried online through its
 API. You can change the assembly by editing the 'assembly' variable in
 the 'getSNPwww' function of 'nanopipe_calc_polymorphism.py'.
 A local copy of PlasmoDB needs to be supplied. You can either
-download it from this github page or create your own. To create your own
+download it from this github page (nanopipe2/SNPdbPlasf) or create your own. To create your own
 database, go to http://plasmodb.org/plasmo/showQuestion.do?questionFullName=SnpQuestions.NgsSnpsByLocation
 , choose Plasmodium falciparum 3D7 and download the SNP data for all 14
 chromosomes. Choose the following settings:
