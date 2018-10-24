@@ -27,7 +27,8 @@ sub loadMAF {
 					# Split by any number of white spaces
 					my @line_data = split ' ', $_; 
 					my $align_len = length $line_data[-1];
-					$chr = $line_data[1]." ";
+					$chr = $line_data[1];
+					$chr =~ s/^chr//;
 					$align_start = $line_data[2];
 					$align_end = $align_len + $align_start -1;
 				}	
@@ -313,6 +314,7 @@ sub getQual {
 #-------------------------------------------------------------------------------------------------------------------------------------------#
 
 use strict;
+use warnings;
 use Cwd;
 use JSON::Tiny qw(decode_json encode_json);
 
@@ -323,9 +325,6 @@ $| = 1;
 my %print_dict = ();
 my %tidmap = ();
 my %enc = ();
-my $match = undef;
-my $matchRef = undef;
-my $chr = undef;
 my $cwd = getcwd;
 my $cwdRef = \$cwd;
 opendir my $dir,$cwd , or die "Cannot open directory: $!";
@@ -338,14 +337,15 @@ open(CHR_HASH, "<", $cwd."/calc.tidmap") or die "Couldn't open tidmap file, $!";
 while(<CHR_HASH>) {
 	$_ =~ s/^\s+|\s+$//g;
 	my @line_split = split('\t', $_);
-	$chr =$line_split[0]." ";
+	my $chr =$line_split[0];
+	$chr =~ s/^chr//;
 	my $encode =$line_split[1];
 	$tidmap{$encode} = $chr;
 	$enc{$chr} = $encode
 	
 }
 
-my $tidLen = %tidmap;
+my $tidLen = keys(%tidmap);
 
 # Tidmap file is empty: Data is not good enough. Raise no exception. 
 if ($tidLen == 0) {
@@ -369,14 +369,6 @@ foreach my $queryChr (@chromosomes) {
 	
 	my @snps = keys(%{$resHash{$queryChr}});
 	
-	# resHash only accepts chromosomes like "1", hashes created in this script need "chr1 "
-	my $resChr = $queryChr;
-	
-	# Use references to keep datatype for subs
-	if ($match eq 'chr') {
-		$queryChr = "chr".$queryChr
-	}
-	$queryChr = $queryChr." ";
 	my $ChrRef = \$queryChr;
 	
 	# List of all alignment starts for the query chromosome
@@ -399,10 +391,10 @@ foreach my $queryChr (@chromosomes) {
 		my $avPerr = getQual ($ChrRef, $snpRef, $hashRef, $resultsRef);
 		
 		# Save to resHash
-		splice (@{$resHash{$resChr}{$snp}}, -4, 0, $avPerr."\t");
+		splice (@{$resHash{$queryChr}{$snp}}, -4, 0, $avPerr."\t");
 		
 	}
-	my @positions = keys(%{$resHash{$resChr}});
+	my @positions = keys(%{$resHash{$queryChr}});
 	
 	@positions =  sort {$a <=> $b} @positions;
 	
@@ -410,7 +402,7 @@ foreach my $queryChr (@chromosomes) {
 	my $printstr = $resHash{"**header**"};
 	
 	foreach my $pos (@positions) {
-		$printstr = $printstr.$pos."\t".join("",@{$resHash{$resChr}{$pos}});
+		$printstr = $printstr.$pos."\t".join("",@{$resHash{$queryChr}{$pos}});
 	}
 	
 	my $outpath = $cwd."/"."calc.nuccounts.".$enc{$queryChr}.".poly";
