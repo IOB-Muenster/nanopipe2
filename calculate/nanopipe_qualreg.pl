@@ -95,7 +95,7 @@ sub searchStarts {
 	my $isNeighbor = 0;
 	
 	
-	# Check once if the query could be found in the list (smaller than or equal to first)
+	# Check once if the query could be found in the list (bigger than or equal to first)
 	if ($query >= $listRef -> [0]) {
 	}
 	else {
