@@ -108,7 +108,7 @@ details:
     mv nanopipe2-master/* .
     rmdir nanopipe2-master
     rm nanopipe2-master.zip
-	chmod a+x calculate/*
+    chmod a+x calculate/*
 
 and you will get a folder:
 
@@ -257,6 +257,12 @@ and you will get a folder:
 
 The just call install.sh inside the folder NANOPIPE
 
+    sh install.sh
+
+By the way: the requirements of perl, python and C compiler are
+not handled in this script - just some dependencies like neccessary
+perl modules can be installed - but this needs administrator priviledges!
+
 
 ========================================================================
 Install prepared nanopipe2 binaries
@@ -273,6 +279,9 @@ repository. Just download them and extract in the folder
     mv nanopipe2-master/* .
     rmdir nanopipe2-master
     rm nanopipe2-master.zip
+
+By the way: the requirements of perl, python and some additional
+perl / python packages must be handled additionally!
 
 
 ========================================================================
