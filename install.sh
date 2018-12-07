@@ -9,6 +9,11 @@
 NANOPIPE=`pwd`
 OS=`uname -s`
 
+if [ "$OS" != "FreeBSD" && "$OS" != "Linux" ]; then
+	echo "This script runs only on FreeBSD and Linux"
+	exit 0
+fi
+
 # ------------------------------------------------------------------------
 # Check prerequites
 # ------------------------------------------------------------------------
