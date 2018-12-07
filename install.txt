@@ -1,217 +1,295 @@
+========================================================================
 How to enable the nanopipe pipeline
 ========================================================================
 
 
+========================================================================
 Requirements
 ========================================================================
 
 Following software needs to be installed
 
 - Programming languages perl (5.24) and python (2.7.14)
+- C compiler (either clang or gcc)
 - samtools and last (installation procedure see below!)
+- wget (if need to download sources)
 
-Following perl modules need to be installed
+Following perl modules need to be available
 
-- Core modules 
-  * Config
-  * Cwd
-  * Fcntl
-  * File::Basename
-  * File:: Copy
-  * File::Path
-  * Getopt::Long
-  * Time::HiRes
-  
-- Additional modules
-  * JSON::Tiny
-  * Proc::ProcessTable
-  * File::Touch
-  
-Following python modules need to be installed
+- Core modules: Config, Cwd, Fcntl, File::Basename, File::Copy,
+  File::Path, Getopt::Long, Time::HiRes
 
-- Core modules
-  * __future__
-  * json
-  * os
-  * re
-  * subprocess
-  * sys
-  * time
-  * urllib
-  * urllib2
+- Additional modules: JSON::Tiny, Proc::ProcessTable, File::Touch
+
+Following python modules need to be available
+
+- Core modules: __future__, json, os, re, subprocess, sys, time,
+  urllib, urllib2
 
 
-Howto
+========================================================================
+Start
 ========================================================================
 
+First of all, choose a directory (here named /path/to/nanopipe and in
+further called just NANOPIPE) where you place all nanopipe related stuff,
+meaning programs and your genome targets.  The directory where you
+place your generated data depends on your favorite location - this
+should be different than this folder, because it is a good idea to
+separate program and generated data.
 
-First of all, choose a directory (here named /path/to/nanopipe) where
-you place all nanopipe related stuff, meaning programs and your
-genome targets.  The directory where you place your generated data
-depends on your favorite location.
+------------------------------------------------------------------------
+Three install options
+------------------------------------------------------------------------
 
-Then enter the directory and download the file nanopipe2.tgz from the
-github repository https://github.com/IOB-Muenster/nanopipe2.  Extract
-the content, you will get a folder like:
+You have the option to install the software:
 
-# ll
-total 92
-drwxr-xr-x  4 user  group      7 Sep 19 11:12 .
-drwxr-xr-x  9 user  group     16 Sep 19 10:48 ..
-drwxr-xr-x  3 user  group      3 Jun 29 15:29 calculate
-drwxr-xr-x  3 user  group      3 Jun 29 15:29 modules
-drwxr-xr-x  3 user  group      3 Jun 29 15:29 targets
+(1) Manually, meaning you compile and download all neccesary stuff.
+
+(2) By the script called install.sh, which does the most for you -
+    meaning compiling samtools, last and sets paths...
+
+(3) By precompiled packages (Either for FreeBSD 11.1, Ubuntu 16.04 or
+    OSX)
+
+In the end you can call the NANOPIPE2/script check.sh to check the
+installation.
+
+------------------------------------------------------------------------
+Install perl modules
+------------------------------------------------------------------------
+
+Install perl modules (if not existing)
+
+    sudo perl -MCAPN -e "install File::Basename"
+    sudo perl -MCAPN -e "install File::Copy"
+    sudo perl -MCAPN -e "install File::Path"
+    sudo perl -MCAPN -e "install Getopt::Long"
+    sudo perl -MCAPN -e "install Time::HiRes"
+    sudo perl -MCAPN -e "install JSON::Tiny"
+    sudo perl -MCAPN -e "install Proc::ProcessTable"
+    sudo perl -MCAPN -e "install File::Touch"
+
+------------------------------------------------------------------------
+Adjust paths
+------------------------------------------------------------------------
+
+Set perl library and executable paths by executing the following 3
+lines (assume you are using bash)
+
+    export NANOPIPE=/path/to/nanopipe
+    export PATH=${PATH}:$NANOPIPE/calculate
+    export PERL5LIB=$NANOPIPE/modules
+
+so the perl modules and executables can be found.
+
+If you want (it would be the best!) make it permanent and add the
+lines to $HOME/.bashrc.
+
+    echo "export NANOPIPE=/path/to/nanopipe" >> $HOME/.bashrc
+    echo "export PATH=${PATH}:$NANOPIPE/calculate" >> $HOME/.bashrc
+    echo "export PERL5LIB=$NANOPIPE/modules" >> $HOME/.bashrc
+
+
+========================================================================
+Install nanopipe2 manually
+========================================================================
+
+Create and enter your nanopipe2 directory. Download the file
+nanopipe2-master.tgz from the github repository
+https://github.com/IOB-Muenster/nanopipe2.  Extract the file
+nanopipe2-master.zip, move the content into /path/to/nanopipe - in
+details:
+
+    mkdir /path/to/nanopipe
+    cd /path/to/nanopipe
+    /download software from github into this folder/
+    unzip nanopipe2-master.zip
+    mv nanopipe2-master/* .
+    rmdir nanopipe2-master
+    rm nanopipe2-master.zip
+	chmod a+x calculate/*
+
+and you will get a folder:
+
+    # ls -al
+    -rw-r--r--   1 user  user  11357 Nov 28 09:56 LICENSE
+    -rw-r--r--   1 user  user    458 Nov 28 09:56 README.md
+    drwxr-xr-x   2 user  user     16 Dec  4 10:18 SNPdbPlasf
+    drwxr-xr-x   2 user  user      5 Dec  4 10:18 calculate
+    -rwxr-xr-x   1 user  user   6377 Dec  4 10:48 check
+    -rwxr-xr-x   1 user  user   6377 Dec  4 10:48 install
+    -rw-r--r--   1 user  user   6377 Dec  4 10:48 install.txt
+    drwxr-xr-x   3 user  user      3 Dec  4 10:18 modules
+    -rw-r--r--   1 user  user   1575 Nov 28 09:56 run.txt
+    drwxr-xr-x   2 user  user      4 Dec  4 10:18 targets
+    drwxr-xr-x   2 user  user      3 Dec  4 10:18 tools
+	...
+
+------------------------------------------------------------------------
+Adjust paths
+------------------------------------------------------------------------
 
 Then you need to adjust some settings. First, the file
 modules/nanopipe2/paths.pm and change the line
 
-our $PROJDIR = "Please enter your nanopipe2 directory here!";
+    our $PROJDIR = "Please enter your nanopipe2 directory here!";
 
 with
 
-our $PROJDIR = "/path/to/nanopipe";
+    our $PROJDIR = "/path/to/nanopipe";
 
+------------------------------------------------------------------------
+Install more additional software
+------------------------------------------------------------------------
 
-Adjust paths
-========================================================================
+The software like last and samtools is installed inside the nanopipe
+folder NANOPIPE/tools - just for simplicity and to avoid problems
+with other applications.
 
-Set the neccessary perl and executable paths with
+First of all set PATH and create tools folder and go into
 
-# setenv PATH ${PATH}:/path/to/nanopipe/calculate
-# setenv PERL5LIB /path/to/nanopipe/modules
+    export TOOLSDIR=$NANOPIPE/tools
+    mkdir -p $TOOLSDIR/bin
+    cd $TOOLSDIR
 
-or
+------------------------------------------------------------------------
+Install last
+------------------------------------------------------------------------
 
-# export PATH=${PATH}:/path/to/nanopipe/calculate
-# export PERL5LIB=/path/to/nanopipe/modules
-
-so the perl modules and executables can be found.  This is depending
-of which shell you use.  You can place this in .bashrc or .tcshrc
-files
-
-
-Install
-========================================================================
-
-The software like samtools and last is installed inside the nanopipe
-folder /path/to/nanopipe/tools - just for simplicity and to avoid problems
-with other applications.  Applications are in the bin subfolder.
-
-
-==> Install last
-
-Download a new version of last http://last.cbrc.jp/ and do the
+Download a (new) version of last http://last.cbrc.jp/ and do the
 following steps:
 
-set the path and create folders
+(Replace last-version.zip with your version like last-987.zip)
 
-# export TOOLSDIR=/path/to/nanopipe/tools
-# mkdir -p $TOOLSDIR/bin
+Then execute on FreeBSD
 
-Rename last-version.zip with your version like last-987.zip
-
-Then execute (on FreeBSD) - please use a bource shell or bash!
-
--- snip --
-[ -d last ] && rm -rf last
-
-unzip last-version.zip
-mv last-version last
-
-cd last/src
-sed -e '{
+    unzip last-version.zip
+    mv last-version last
+    sed -i.tmp -e '{
 s/= g++/= c++/;
 s/= gcc/= cc/
-}' <makefile >x
-mv x makefile
-cd ..
-gmake
-cd ..
-
-rsync -av last/src/last-split $TOOLSDIR/bin
-rsync -av last/src/lastal $TOOLSDIR/bin
-rsync -av last/src/lastdb $TOOLSDIR/bin
-rsync -av last/scripts/maf-convert $TOOLSDIR/bin
-rsync -av last/scripts/last-train $TOOLSDIR/bin
-
-rm -rf last
--- snip --
+}'  last/makefile
+    cd last; gmake; cd ..
+    cp last/src/last-split $TOOLSDIR/bin
+    cp last/src/lastal $TOOLSDIR/bin
+    cp last/src/lastdb $TOOLSDIR/bin
+    cp last/scripts/maf-convert $TOOLSDIR/bin
+    cp last/scripts/last-train $TOOLSDIR/bin
+    rm -rf last-*
 
 or on Linux
 
--- snip --
-[ -d last ] && rm -rf last
+    unzip last-version.zip
+    mv last-version last
+    cd last; make; cd ..
+    cp last/src/last-split $TOOLSDIR/bin
+    cp last/src/lastal $TOOLSDIR/bin
+    cp last/src/lastdb $TOOLSDIR/bin
+    cp last/scripts/maf-convert $TOOLSDIR/bin
+    cp last/scripts/last-train $TOOLSDIR/bin
+    rm -rf last-*
 
-unzip last-version.zip
-mv last-version last
-
-cd last/src
-cd ..
-make
-cd ..
-
-rsync -av last/src/last-split $TOOLSDIR/bin
-rsync -av last/src/lastal $TOOLSDIR/bin
-rsync -av last/src/lastdb $TOOLSDIR/bin
-rsync -av last/scripts/maf-convert $TOOLSDIR/bin
-rsync -av last/scripts/last-train $TOOLSDIR/bin
-
-rm -rf last
--- snip --
-
-
-==> Install samtools
+------------------------------------------------------------------------
+Install samtools
+------------------------------------------------------------------------
 
 Download samtools from http://www.htslib.org/download/
 
-Rename samtools-version.tar.bz2 with your version
+(Rename samtools-version.tar.bz2 with your version)
 
-Then execute (on FreeBSD) - please use a bource shell or bash!
+Then execute on FreeBSD
 
--- snip --
-[ -d samtools ] && rm -rf samtools
-
-tar -xvzf $SRCDIR/samtools/samtools-1.4.1.tar.bz2
-mv samtools-1.4.1 samtools
-
-cd samtools
-gmake
-cd ..
-
-rsync -av samtools/samtools $TOOLSDIR/bin
-
-rm -rf samtools
--- snip --
+    tar -xvyf $SRCDIR/samtools/samtools-version.tar.bz2
+    mv samtools-version samtools
+    sed -i.tmp -e '{
+s/= gcc/= cc/
+}'  samtools/Makefile
+    sed -i.tmp -e '{
+s/= gcc/= cc/
+}'  samtools/htslib*/Makefile
+    cd samtools; gmake; cd ..
+    cp samtools/samtools $TOOLSDIR/bin
+    rm -rf samtools samtools-version.tar.bz2
 
 or on Linux
 
--- snip --
-[ -d samtools ] && rm -rf samtools
-
-bunzip2 -c $SRCDIR/samtools/samtools-1.4.1.tar.bz2 | tar -xvf -
-mv samtools-1.4.1 samtools
-
-cd samtools
-make
-cd ..
-
-rsync -av samtools/samtools $TOOLSDIR/bin
-
-rm -rf samtools
--- snip --
+    bunzip2 -c $SRCDIR/samtools/samtools-version.tar.bz2 | tar -xvf -
+    mv samtools-version samtools
+    cd samtools; make; cd ..
+    cp samtools/samtools $TOOLSDIR/bin
+    rm -rf samtools samtools-version.tar.bz2
 
 
+========================================================================
+Install nanopipe2 automatic
+========================================================================
+
+Create and enter your nanopipe2 directory. Download the file
+nanopipe2-master.tgz from the github repository
+https://github.com/IOB-Muenster/nanopipe2.  Extract the file
+nanopipe2-master.zip, move the content into /path/to/nanopipe - in
+details:
+
+    mkdir /path/to/nanopipe
+    cd /path/to/nanopipe
+    /download software from github into this folder/
+    unzip nanopipe2-master.zip
+    mv nanopipe2-master/* .
+    rmdir nanopipe2-master
+    rm nanopipe2-master.zip
+
+and you will get a folder:
+
+    # ls -al
+    -rw-r--r--   1 user  user  11357 Nov 28 09:56 LICENSE
+    -rw-r--r--   1 user  user    458 Nov 28 09:56 README.md
+    drwxr-xr-x   2 user  user     16 Dec  4 10:18 SNPdbPlasf
+    drwxr-xr-x   2 user  user      5 Dec  4 10:18 calculate
+    -rwxr-xr-x   1 user  user   6377 Dec  4 10:48 check
+    -rwxr-xr-x   1 user  user   6377 Dec  4 10:48 install
+    -rw-r--r--   1 user  user   6377 Dec  4 10:48 install.txt
+    drwxr-xr-x   3 user  user      3 Dec  4 10:18 modules
+    -rw-r--r--   1 user  user   1575 Nov 28 09:56 run.txt
+    drwxr-xr-x   2 user  user      4 Dec  4 10:18 targets
+    drwxr-xr-x   2 user  user      3 Dec  4 10:18 tools
+    ...
+
+The just call install.sh inside the folder NANOPIPE
+
+
+========================================================================
+Install prepared nanopipe2 binaries
+========================================================================
+
+The are three different binary packages downloadable on the github
+repository. Just download them and extract in the folder
+/path/to/nanopipe - in details:
+
+    mkdir /path/to/nanopipe
+    cd /path/to/nanopipe
+    /download binary packages from github into this folder/
+    unzip nanopipe2-master.zip
+    mv nanopipe2-master/* .
+    rmdir nanopipe2-master
+    rm nanopipe2-master.zip
+
+
+========================================================================
 SNP databases
 ========================================================================
 
 Two databases are used to analyze the SNPs: dbSNP for human data and
-PlasmoDB for Plasmodium falciparum. dbSNP is queried online through its
-API. You can change the assembly by editing the 'assembly' variable in
-the 'getSNPwww' function of 'nanopipe_calc_polymorphism.py'.
-A local copy of PlasmoDB needs to be supplied. You can either
-download it from this github page (nanopipe2/SNPdbPlasf) or create your own. To create your own
-database, go to http://plasmodb.org/plasmo/showQuestion.do?questionFullName=SnpQuestions.NgsSnpsByLocation
-, choose Plasmodium falciparum 3D7 and download the SNP data for all 14
+PlasmoDB for Plasmodium falciparum. dbSNP is queried online through
+its API. You can change the assembly by editing the 'assembly'
+variable in the 'getSNPwww' function of nanopipe_calc_polymorphism.py.
+A local copy of PlasmoDB needs to be supplied. You can either download
+it from this github page (NANOPIPE/SNPdbPlasf) or create your own. To
+create your own database, go to
+
+    http://plasmodb.org/plasmo/showQuestion.do?questionFullName=SnpQuestions.NgsSnpsByLocation,
+
+choose Plasmodium falciparum 3D7 and download the SNP data for all 14
 chromosomes. Choose the following settings:
 
 - Start at: 0
@@ -220,30 +298,103 @@ chromosomes. Choose the following settings:
 - Minor allele frequency: 0
 - Percent isolates with a base call: 20%
 
-You get separate files per chromosome which need to be sorted using the 
-following options: sort -k1.20 -n -o filename filename
-Now place the files for each chromosome in a folder.
-Change the variable 'plasBasePath' in 'nanopipe_calc_polymorphism.py' to
-the folder path of your downloaded or self-created folder containing the
+You get separate files per chromosome which need to be sorted using
+the following options:
+
+    sort -k1.20 -n -o filename filename
+
+Now place the files for each chromosome in a folder.  Change the
+variable 'plasBasePath' in 'nanopipe_calc_polymorphism.py' to the
+folder path of your downloaded or self-created folder containing the
 SNP files.
 
 
+========================================================================
+Check Installation
+========================================================================
+
+For installed packages and software call the script NANOPIPE/check.sh
+
+To run a testcase: enter the testfolder inside the nanopipe2 package
+and run nanopipe_calc.pl (I replaced my nanopipe2 directory with
+NANOPIPE, for better leading):
+
+    # cd NANOPIPE/testdata
+    # nanopipe_calc.pl -q input.query -t input.target
+    ==> Initialize
+    ==> Align with last
+    --> Execute: NANOPIPE/tools/bin/lastal -A 15 -B 4 -P 2 -Q 0 -S 1 -a 15 -b 3 -k 2 -p input.substmatrix NANOPIPE/targets/plasmodium/target input.query | NANOPIPE/tools/bin/last-split >calc.lastalign.maf
+    Time: 59 seconds
+    ==> Analyze
+    Time: 2 seconds
+    ==> Save Target Counts
+    ==> Save Query Lengths
+    ==> Save Data
+    Time: 0 seconds
+    ==> Save Nucleotid Counts Helper
+    Time: 0 seconds
+    ==> Calculate bam and bai files
+    --> Execute: NANOPIPE/tools/bin/maf-convert sam -d calc.lastalign.maf >calc.sam
+    NANOPIPE/tools/bin/samtools view -bS -o calc.bam calc.sam >/dev/null 2>&1
+    NANOPIPE/tools/bin/samtools sort -o calc.bam-sorted calc.bam >/dev/null 2>&1
+    mv calc.bam-sorted calc.bam
+    NANOPIPE/tools/bin/samtools index calc.bam >/dev/null 2>&1
+    Time: 1 seconds
+    --> Execute: NANOPIPE/calculate/nanopipe_calc_polymorphism.py -q -s plasf
+    calc.nuccounts.2PlasmoDB local: 0 matches.
+    calc.nuccounts.1: PlasmoDB local: 3 match(es); 0 artifact(s).
+    Analyzing alignment quality: True
+    Quality analysis finished!
+    ==> Total time: 65 seconds
+
+The output in the folder will look like:
+
+    # ls -al
+    total 6072
+    drwxr-xr-x  2 user  user       26 Dec  6 10:44 .
+    drwxr-xr-x  8 user  user       12 Dec  6 10:39 ..
+    -rw-r--r--  1 user  user   243807 Dec  6 10:44 calc.bam
+    -rw-r--r--  1 user  user     4688 Dec  6 10:44 calc.bam.bai
+    -rw-r--r--  1 user  user     3415 Dec  6 10:44 calc.consensus.1
+    -rw-r--r--  1 user  user     2497 Dec  6 10:44 calc.consensus.2
+    -rw-r--r--  1 user  user        0 Dec  6 10:44 calc.execute.error
+    -rw-r--r--  1 user  user  2658489 Dec  6 10:44 calc.lastalign.maf
+    -rw-r--r--  1 user  user        0 Dec  6 10:44 calc.messages
+    -rw-r--r--  1 user  user    76099 Dec  6 10:44 calc.nuccounts.1
+    -rw-r--r--  1 user  user       68 Dec  6 10:44 calc.nuccounts.1.help
+    -rw-r--r--  1 user  user      345 Dec  6 10:44 calc.nuccounts.1.poly
+    -rw-r--r--  1 user  user    59397 Dec  6 10:44 calc.nuccounts.2
+    -rw-r--r--  1 user  user       60 Dec  6 10:44 calc.nuccounts.2.help
+    -rw-r--r--  1 user  user      141 Dec  6 10:44 calc.nuccounts.2.poly
+    -rw-r--r--  1 user  user     2693 Dec  6 10:44 calc.querylens
+    -rw-r--r--  1 user  user  1006136 Dec  6 10:44 calc.sam
+    -rw-r--r--  1 user  user       17 Dec  6 10:44 calc.statistics
+    -rw-r--r--  1 user  user      161 Dec  6 10:44 calc.targetcounts
+    -rw-r--r--  1 user  user       28 Dec  6 10:44 calc.tidmap
+    -rw-r--r--  1 user  user       26 Sep 25 17:45 input.lastparams
+    -rw-r--r--  1 user  user   904399 Dec  6 10:40 input.query
+    -rw-r--r--  1 user  user        0 Dec  6 10:40 input.query.done
+    -rw-rw-r--  1 user  user   904399 Dec  6 10:31 input.query.orig
+    -rw-r--r--  1 user  user       72 Dec  6 10:43 input.substmatrix
+    -rw-r--r--  1 user  user       10 Sep 25 17:45 input.target
+
+
+========================================================================
 Create a target
 ========================================================================
 
 To create a new target, do the folowing steps:
 
-- Create a new subfolder in /path/to/nanopipe/targets
+- Create a new subfolder in NANOPIPE/targets
 
-- Copy the config file /path/to/nanopipe/targets/config into your subfolder
-  and modify it according to your new task. Dont forget to give the name to 
-  the target! 
+- Copy the config file NANOPIPE/targets/config into your subfolder
+  and modify it according to your new task. Dont forget to give the
+  (target) name a value!
 
-- Create the target database. Put your genome fasta (or any target you are 
-  going to use) file into the subfolder with the name 'targets'
-
-- Name this file 'target.fasta'
+- Create the target database. Put your genome fasta (or any target you
+  are going to use) file into the subfolder with the name 'targets'
+  and name this file 'target.fasta'
 
 - Then run the command lastdb in the target's folder
 
-  # /path/to/nanopipe/tools/freebsd/bin/lastdb target target.fasta
+  NANOPIPE/tools/bin/lastdb target target.fasta
