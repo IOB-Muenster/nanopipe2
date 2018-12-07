@@ -136,12 +136,12 @@ fi
 echo -n "Install perl (system) modules (you must have admin priviledges)? [Y/N] "
 read ANSWER
 if [ "$ANSWER" = "Y" ]; then
-	sudo perl -MCAPN -e "install File::Basename"
-	sudo perl -MCAPN -e "install File::Copy"
-	sudo perl -MCAPN -e "install File::Path"
-	sudo perl -MCAPN -e "install Getopt::Long"
-	sudo perl -MCAPN -e "install Time::HiRes"
-	sudo perl -MCAPN -e "install JSON::Tiny"
-	sudo perl -MCAPN -e "install Proc::ProcessTable"
-	sudo perl -MCAPN -e "install File::Touch"
+	sudo perl -MCPAN -e "install File::Basename"
+	sudo perl -MCPAN -e "install File::Copy"
+	sudo perl -MCPAN -e "install File::Path"
+	sudo perl -MCPAN -e "install Getopt::Long"
+	sudo perl -MCPAN -e "install Time::HiRes"
+	sudo perl -MCPAN -e "install JSON::Tiny"
+	sudo perl -MCPAN -e "install Proc::ProcessTable"
+	sudo perl -MCPAN -e "install File::Touch"
 fi
