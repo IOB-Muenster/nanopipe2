@@ -402,6 +402,22 @@ The output in the folder will look like:
 Create a target
 ========================================================================
 
+You can create a target database either with the help of a script
+or manually.
+
+------------------------------------------------------------------------
+With a script
+------------------------------------------------------------------------
+
+First set the environment variable NANOPIPE pointing to the
+installation fodler of nanopipe.  Then call
+
+    sh $NANOPIE/createtarget.sh targetname /path/to/fasta/file
+
+------------------------------------------------------------------------
+Manually
+------------------------------------------------------------------------
+
 To create a new target, do the folowing steps:
 
 - Create a new subfolder in NANOPIPE/targets
