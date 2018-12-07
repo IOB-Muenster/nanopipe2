@@ -37,7 +37,7 @@ fi
 # Check paths to nanopipe, last aligner and samtools
 # ========================================================================
 
-[ "`which nanopipe_calc.pl` 2>/dev/null; echo $?" != 0 ] && echo "Cannot find nanopipe_calc.pl - maybe missing PATH setting!"
+[ "`which nanopipe_calc.pl 2>/dev/null`; echo $?" != 0 ] && echo "Cannot find nanopipe_calc.pl - maybe missing PATH setting!"
 [ "$PERL5LIB" = "" ] && echo "Missing PERL5LIB setting to modules directory!"
 CONFIG_PATH=`which nanopipe_calc.pl 2>/dev/null`/../modules/nanopipe2/config.pm
 [ -f CONFIG_PATH -a "`grep 'Please enter' $CONFIG_PATH 2>/dev/null`" = "" ] && echo "Parameter PROJDIR not changed in config.pm!"
