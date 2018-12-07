@@ -315,11 +315,21 @@ Check Installation
 
 For installed packages and software call the script NANOPIPE/check.sh
 
-To run a testcase: enter the testfolder inside the nanopipe2 package
-and run nanopipe_calc.pl (I replaced my nanopipe2 directory with
-NANOPIPE, for better leading):
+To run a testcase:
 
-    # cd NANOPIPE/testdata
+(1) Download the Plasmodium target, unzip it in the targets folder -
+in details:
+
+    cd NANOPIPE/targets
+    wget bioinformatics.uni-muenster.de/tools/nanopipe2-download/plasmodium.tgz
+    tar -xvzf plasmodium.tgz
+    rm plasmodium.tgz
+
+(2) Enter the folder testcase inside the nanopipe2 package and run
+nanopipe_calc.pl (I replaced my nanopipe2 directory with NANOPIPE,
+for better reading):
+
+    # cd NANOPIPE/testcase
     # nanopipe_calc.pl -q input.query -t input.target
     ==> Initialize
     ==> Align with last
