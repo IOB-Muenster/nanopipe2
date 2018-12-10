@@ -99,7 +99,7 @@ rm index.html*
 
 # Get samtools*tar.bz2 (with a trick to get version)
 VERSION=`echo $FILE | awk '{if(match($0,/[0-9\.]+/))print substr($0,RSTART,RLENGTH-1)}'`
-wget https://github.com/samtools/samtools/releases/download/$VERSION/$FILE
+wget --no-check-certificate https://github.com/samtools/samtools/releases/download/$VERSION/$FILE
 bunzip2 -c $FILE | tar -xf -; rm $FILE; mv samtools-* samtools
 
 if [ $OS = "FreeBSD" ]; then
