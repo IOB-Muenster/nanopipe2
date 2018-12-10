@@ -15,24 +15,28 @@ Basic software
 
 - Programming languages perl (5.24) and python (2.7.14)
 - C compiler (either clang or gcc)
+- wget
 - samtools and last (installation procedure see below!)
-- wget (if need to download sources)
 
-Linux
+Additional packages on FreeBSD
 
-- System packages: libncurses5-dev, libncursesw5-dev, zlib1g-dev,
+- System: gmake, sudo, bash
+
+Additional packages on Linux
+
+- System: libncurses5-dev, libncursesw5-dev, zlib1g-dev,
   libbz2-dev, liblzma-dev
 
 Perl mdules
 
-- Core modules: Config, Cwd, Fcntl, File::Basename, File::Copy,
+- Core: Config, Cwd, Fcntl, File::Basename, File::Copy,
   File::Path, Getopt::Long, Time::HiRes
 
-- Additional modules: JSON::Tiny, Proc::ProcessTable, File::Touch
+- Additional: JSON::Tiny, Proc::ProcessTable, File::Touch
 
 Python modules
 
-- Core modules: __future__, json, os, re, subprocess, sys, time,
+- Core: __future__, json, os, re, subprocess, sys, time,
   urllib, urllib2
 
 
