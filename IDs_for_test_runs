@@ -1,0 +1,7 @@
+This file contains run IDs for 5 jobs that can be used as the test and demonstration of the tool (more info can be foiund at http://bioinformatics.uni-muenster.de/share/NanoPipe_test_data).
+Test run 1: Plasmodium falciparum - run ID 153789033639638
+Test run 2: EGFR, human - run ID 153789042448841
+Test run 3: Camponotus maculatus - run ID 153789615015896
+Test run 4: Vaccina virus dRNA seq a) mapped to own genome - run ID 154400756783780; b) mapped to the host genome (Chlorocebus sabeus) - run ID 154401029652282
+
+The runs can bee seen by entering the corresponding run IDs at http://bioinformatics.uni-muenster.de/tools/nanopipe2/generate
