@@ -5,3 +5,39 @@ Test run 3: Camponotus maculatus - run ID 153789615015896
 Test run 4: Vaccina virus dRNA seq a) mapped to own genome - run ID 154400756783780; b) mapped to the host genome (Chlorocebus sabeus) - run ID 154401029652282
 
 The runs can bee seen by entering the corresponding run IDs at http://bioinformatics.uni-muenster.de/tools/nanopipe2/generate
+
+
+Data description:
+
+1. Data set P. falciparum sequencing
+   1.1 MinION targeted sequencing for Plasmodium falciparum sequencing.
+   1.2 PfCRT and K-propeller genes were sequenced using long-read technologies within the experiments of testing MinION sequencer for SNP detection in Plasmodium.
+   1.3 The sequencing was performed for the MinIONTM sequencing workshop in Bangkok, Thailand 2017 at the Mahidol University.
+   1.4 Raw reads in a single FASTA file, archived using zgip command.
+   1.5 P. falciparum culture, strain 3D7.
+   1.6 Size: 21 MB, archived: 4,3 MB.
+
+2. Data set for EGFR sequencing
+   2.1 MinION targeted sequencing of the CDS for EGFR human gene, spanning exons 17-22.
+   2.2 This data were generated to test MinION capasity for detecting SNP in human cancer DNA
+   2.3 The sequencing was performed for	the MinIONTM sequencing workshop in Bangkok, Thailand 2017 at the Mahidol University.
+   2.4 Raw reads in a single FASTA file, archived using	zgip command.
+   2.5 Human lung adenocarcinoma cell line H1975
+   2.6 Size: 900 MB, archived: 259 MB.
+
+3. Data set for Camponotus maculatus sequencing
+   3.1 MinION RNAseq for ant C. maculatus
+   3.2 Poly-A RNA sequencing was performed for the given ant species at first time
+   3.3 The sequencing was performed in the Institute of Bioinformatics, Muenster, Germany; the library was prepared in the group of Juergen Gadau, University of Muenster.
+   3.4 Raw reads in a single FASTA file, archived using zgip command.
+   3.5 Larvae and adult individuals from the lab culture
+   3.6 Size: 1.5 GB, archived: 309 MB.
+   
+4. Data set for dRNAseq of Vaccina virus isolated from the host Chlorocebus sabeus
+   4.1 MinION dRNAseq for proxivirus V. virus WR
+   4.2 Direct mRNA sequencing with long-read sequencing technology of a virus; isolated from the host cultured cell line
+   4.3 The data published at the article under  https://doi.org/10.1093/gigascience/giy139
+   4.4 Data deposited at http://dx.doi.org/10.5524/100525
+   4.5 Virus isolated from the host cells
+   4.6 Data deposited at http://dx.doi.org/10.5524/100525 under ERR2538118.1
+
